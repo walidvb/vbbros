@@ -18,7 +18,19 @@ $(document).ready(function(){
 	}
 
 	//iframe stuff
-	$('.site-link').on('click', function(e){
+	$('.coming-soon').on('click',function(e){e.preventDefault()}).avgrund({			
+		height: 100, // max is 350px
+		showClose: true, // switch to 'true' for enabling close button 
+		showCloseText: 'OKAY', // type your text for close button
+		holderClass: 'custom',
+		closeByEscape: true, // enables closing popup by 'Esc'..
+		closeByDocument: true, // ..and by clicking document itself
+		enableStackAnimation: false, // another animation type
+		onBlurContainer: '', // enables blur filter for specified block
+		template: '<p>This site isn\'t online yet, do come back later!</p>' // or function() { ... }
+	});
+	
+	$('.site-link:not(.coming-soon)').on('click', function(e){
 		e.preventDefault();
 		var href = this.href;
 		var cont = $('#frame-container');

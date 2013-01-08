@@ -20,56 +20,57 @@ $ext = '.png';
 
 $sites = array(
 	dietz => array(
-		client=>'dieter dietz',
+		client =>'dieter dietz',
 		url => 'http://www.dieterdietz.org',
 		id => "dietz",
 		shotCount => 4,
+		classes => 'coming-soon',
 	),
 	
 	plak => array(
-		client=>'plak records',
+		client =>'plak records',
 		url => 'http://www.plak-records.com',
 		id => "plak",
 		shotCount => 3,
 	),
 	
 	easy => array(
-		client=> 'easyamiante',
+		client => 'easyamiante',
 		url => 'http://www.easyamiante.ch',
 		id => "easy",
 		shotCount => 2,
 	),
 	
 	mjc => array(
-		client=>'moi j\'connais',
+		client =>'moi j\'connais',
 		url => 'http://www.moijconnais.com',
 		id => "mjc",
 		shotCount => 4,	
 	),	
 	
 	andone => array(
-		client=>'and-one architecture',
+		client =>'and-one architecture',
 		url => 'http://www.and-one.ch',
 		id => "andone",
 		shotCount => 2,	
 	),
 	
 	opuswerk => array(
-		client=>'opuswerk',
+		client =>'opuswerk',
 		url => 'http://www.opuswerk.ch',
 		id => "opuswerk",
 		shotCount => 2,		
 	),
 		
 	stef => array(
-		client=>'st&eacute;phane blumer',
+		client =>'st&eacute;phane blumer',
 		url => 'http://www.stephaneblumer.com',
 		id => "stef",
 		shotCount => 4,		
 	),
 	
 	absolutive => array(
-		client=>'absolutive records',
+		client =>'absolutive records',
 		url => 'http://www.absolutive.net',
 		id => "absolutive",
 		shotCount => 4,		
@@ -126,7 +127,9 @@ $siteCounter = 0;//used to know how many sites have been displayed
   <![endif]-->
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
   <script type="text/javascript" src="http://flesler-plugins.googlecode.com/files/jquery.scrollTo-1.4.3.1-min.js"></script>
-  <script type="text/javascript" src="http://vbbros.net/vbbros/script.js"></script>
+  <script type="text/javascript" src="vbbros/jquery.avgrund.js_v1_1/jquery.avgrund.js"></script>
+  <link rel="stylesheet" type="text/css" href="vbbros/jquery.avgrund.js_v1_1/avgrund.css">
+  <script type="text/javascript" src="vbbros/script.js"></script>
 </head>
 
 <body>
@@ -145,7 +148,7 @@ $siteCounter = 0;//used to know how many sites have been displayed
 		<?php endif; ?> 
 		
 		<li class="site">
-			    <a class="site-image-a site-link" href="<?php print $site['url'] ?>" target="_blank">
+			    <a class="site-image-a site-link <?php print $site['classes'] ?>" href="<?php print $site['url'] ?>" target="_blank">
 				    <div class="site-image" style="background-image: url(<?php print $path . $site['id'] . '0' . $ext ?>)"> 
 				    </div>
 				    <!-- <img class="site-image" width="100%" height="auto" src="<?php print $path . $site['id'] . '0' . $ext ?>"/> -->
