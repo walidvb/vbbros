@@ -8,10 +8,13 @@
 	declare a new site like this:
 	
 	foobar = array(
-		client=>'Foo Bar',
-		url => 'http://www.foobar.com',
+		client =>'Foo Bar',
+		url => 'http://www.foobar.org',
+		date => '2013',
+		type => 'foo',
+		location => 'Bar foo',
 		id => "foobar",
-		shotCount => 5,
+		classes => 'coming-soon', // if the site isn't ready yet (then it shouldn't even be there, should it now..)
 	),
 */
 
@@ -22,58 +25,83 @@ $sites = array(
 	dietz => array(
 		client =>'dieter dietz',
 		url => 'http://www.dieterdietz.org',
+		date => '2012',
+		type => 'Architecture',
+		location => 'Geneva / Z&uuml;rich',
 		id => "dietz",
-		shotCount => 4,
+		job => "development",
 		classes => 'coming-soon',
 	),
 	
 	plak => array(
 		client =>'plak records',
 		url => 'http://www.plak-records.com',
+		date => '2012',
+		type => 'Label',
+		location => 'Geneva',
 		id => "plak",
-		shotCount => 3,
+		job => "design, concept, development",
 	),
 	
 	easy => array(
 		client => 'easyamiante',
 		url => 'http://www.easyamiante.ch',
+		date => '2012',
+		type => 'Corporate',
+		location => 'Geneva',
 		id => "easy",
-		shotCount => 2,
+		job => "design, development",
+
 	),
 	
 	mjc => array(
-		client =>'moi j\'connais',
+		client =>'moi j\'connais records',
 		url => 'http://www.moijconnais.com',
+		date => '2011',
+		type => 'Label',
+		location => 'Geneva',
 		id => "mjc",
-		shotCount => 4,	
+		job => "design, concept, development",	
 	),	
 	
 	andone => array(
 		client =>'and-one architecture',
 		url => 'http://www.and-one.ch',
+		date => '2011',
+		type => 'Architecture',
+		location => 'Geneva',
 		id => "andone",
-		shotCount => 2,	
+		job => "design, development",
 	),
 	
 	opuswerk => array(
 		client =>'opuswerk',
 		url => 'http://www.opuswerk.ch',
+		date => '2010',
+		type => 'Musician',
+		location => 'Geneva',
 		id => "opuswerk",
-		shotCount => 2,		
+		job => "design, concept, development"
 	),
 		
 	stef => array(
 		client =>'st&eacute;phane blumer',
 		url => 'http://www.stephaneblumer.com',
+		date => '2010',
+		type => 'Artist',
+		location => 'Geneva / London',
 		id => "stef",
-		shotCount => 4,		
+		job => "design, concept, development"
 	),
 	
 	absolutive => array(
 		client =>'absolutive records',
 		url => 'http://www.absolutive.net',
+		date => '2010',
+		type => 'Label',
+		location => 'Aix-en-Provence',
 		id => "absolutive",
-		shotCount => 4,		
+		job => "design, concept, development",
 	),
 
 );
@@ -130,6 +158,8 @@ $siteCounter = 0;//used to know how many sites have been displayed
   <script type="text/javascript" src="vbbros/jquery.avgrund.js_v1_1/jquery.avgrund.js"></script>
   <link rel="stylesheet" type="text/css" href="vbbros/jquery.avgrund.js_v1_1/avgrund.css">
   <script type="text/javascript" src="vbbros/script.js"></script>
+   <script type="text/javascript" src="vbbros/mousetrap.min.js"></script>
+
 </head>
 
 <body>
@@ -138,44 +168,57 @@ $siteCounter = 0;//used to know how many sites have been displayed
 		<?php foreach ($sites as $site): ?>
 		
 		<?php if($place == $siteCounter): ?>
-			<li class="site" id="we">
+			<li class="item" id="we">
 				 <div id="we-content">
-				        <h1 class="we-title"> VBBROS.NET </h1>
-				    <p>we create (your) website</p>
+				    <h1 class="we-title"> VBBROS.NET </h1>
+				    <h2>we create (your) websites</h2>
 				    <p><a href="mailto:info@vbbros.net">Hire us!</a></p>
+				    <p>or have a look around!</p>
 				 </div>
 			</li>
 		<?php endif; ?> 
 		
-		<li class="site">
+		<li class="item site <?php print $site['classes'] ?>" data-id="<?php print $site['id'] ?>" data-type="<?php print $site['type'] ?>" data-date="<?php print $site['date'] ?>" data-location="<?php print $site['location'] ?>" data-job="<?php print $site['job'] ?>">
 			    <a class="site-image-a site-link <?php print $site['classes'] ?>" href="<?php print $site['url'] ?>" target="_blank">
-				    <div class="site-image" style="background-image: url(<?php print $path . $site['id'] . '0' . $ext ?>)"> 
+				    <div class="site-image" style="background-image: url(<?php print $path . $site['id']. $ext ?>)"> 
 				    </div>
-				    <!-- <img class="site-image" width="100%" height="auto" src="<?php print $path . $site['id'] . '0' . $ext ?>"/> -->
-			    <!-- </a> -->
-			    <section class="site-info">
-			        	<h2 class="client"><?php print $site['client'] ?></h2>
-			        <?php if(false): ?>
-			        <div class="client-link"> 
-			                <?php for($i = 1; $i <= $site['shotCount']; $i++): ?>                
-			            	<a class="colorbox <?php print( ($i==1) ? "client-ss" : "more-pics" ) ?>" href="<?php print $path . $site['id']. $i . $ext ?>" rel="<?php print $site['id'] ?>"><?php print( ($i==0) ? "view" : "more screenshots" ) ?></a>
-			            	<?php endfor; ?>
-			            <a class="client-visit" href="<?php print $site['url'] ?>" target="_blank"> visit </a>
-			        </div> 
-			        <?php endif; ?>
-			    </section>
+				    <!-- <img class="site-image" width="100%" height="auto" src="<?php print $path . $site['id'] . $ext ?>"/> -->
+			    <div class="site-info">
+			        <h2 class="client"><?php print $site['client'] ?></h2>
+			        <div class="job"><?php print $site['job'] ?></div>
+			    </div>
 			  </a>
 		</li>  
 		
 		<?php $siteCounter++; endforeach; ?>    
 	</ul>
+	
+	
 	<div id="frame-container" style="display: none">
-	<div class="frame-title"> </div>
-	<div class="back">&uarr;</div>
-<iframe id="iframe" height="90%" width="100%" >
-</iframe>
+	<div class="frame-more"> 
+		<span class="frame-desc">
+			<span class="frame-title"></span>
+			<span class="sep"> &#124; </span>
+			<span class="frame-details">
+				<span class="frame-type"></span>
+				<span class="sep"> &#124; </span>
+				<span class="frame-location"></span>
+			</span>
+			
+		</span>
+		<span class="controls">
+			<span class="nav">
+				<span class="frame-prev button">&lt;</span>
+				<span class="frame-next button">&gt;</span>
+			</span>
+			<span class="frame-close button">X</span>
+		</span>
 	</div>
-<script type="text/javascript">
+	<iframe id="iframe" height="70%" width="100%" ></iframe>
+	</div>
+	
+	
+<script id="ga" type="text/javascript">
 
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-27024782-9']);
