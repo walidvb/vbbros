@@ -80,8 +80,7 @@ $(document).ready(function(){
 			}
 		}
     });
-
-       
+    
 	$('li.item:not(.coming-soon, #we), .frame-prev, .frame-next').on('click', function(e){
 		e.preventDefault();
 		var target = $(this).data('target');
@@ -124,7 +123,7 @@ $(document).ready(function(){
 		$('#we').prependTo('.container');
 	}
 
-	//iframe stuff
+	//avgrund stuff
 	$('.coming-soon').on('click',function(e){e.preventDefault()}).avgrund({			
 		height: 100, // max is 350px
 		showClose: true, // switch to 'true' for enabling close button 

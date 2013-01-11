@@ -31,7 +31,6 @@ a{
 	text-decoration: none;
 	color: inherit;
 }
-
 /*------------------ /General ------------------*/
 /*------------------ Media Queries--------------*/
 ul{
@@ -88,7 +87,6 @@ li.item{
 		transform-origin-x: 0%;	
 	}
 }
-
 
 /* MEDIUM PAGE */
 @media all and (max-width: 1100px) and (min-width: 550px){
@@ -453,6 +451,9 @@ html, body, #iframe, #frame-container{
 	text-decoration: overline;
 }
 
+.site-container{
+	width: 100%;
+}
 .frame-more{
 	margin-top: 15px;
 	margin-bottom: 15px;
