@@ -160,7 +160,7 @@ $siteCounter = 0;//used to know how many sites have been displayed
   <script type="text/javascript" src="vbbros/script.js"></script>
   <script type="text/javascript" src="vbbros/mousetrap.min.js"></script>
   <script type="text/javascript" src="vbbros/jquery.cycle2.min.js"></script>
-
+  <script type="text/javascript" src="vbbros/jquery.cycle2.scrollVert.js"></script>
 </head>
 
 <body>
@@ -179,7 +179,7 @@ $siteCounter = 0;//used to know how many sites have been displayed
 				</li>
 			<?php endif; ?> 
 			
-			<li class="item site <?php print $site['classes'] ?>" data-id="<?php print $site['id'] ?>" data-type="<?php print $site['type'] ?>" data-date="<?php print $site['date'] ?>" data-location="<?php print $site['location'] ?>" data-job="<?php print $site['job'] ?>">
+			<li class="item site <?php print $site['classes'] ?>">
 				    <a class="site-image-a site-link <?php print $site['classes'] ?>" href="<?php print $site['url'] ?>" target="_blank">
 					    <div class="site-image" style="background-image: url(<?php print $path . $site['id']. $ext ?>)"> 
 					    </div>
@@ -197,36 +197,37 @@ $siteCounter = 0;//used to know how many sites have been displayed
 	
 	<div id="frame-container" style="display: none">
 		<div class="frame-more"> 
-			<span class="frame-desc">
-				
-				<div class="cycle-slideshow" data-cycle-prev=".frame-prev" data-cycle-next=".frame-next" data-cycle-slides="> span" data-cycle-paused="true">
-					<?php foreach($sites as $site): ?>
-					<span>
-						<span class="frame-title"></span>
-						<span class="sep"> &#124; </span>
-						<span class="frame-details">
-							<span class="frame-type"></span>
-							<span class="sep"> &#124; </span>
-							<span class="frame-location"></span>
-						</span>
-					</span>
-					<?php endforeach; ?>
-				</div>
-				<span class="controls">
-					<span class="nav">
+			<div class="controls">
+				<span class="nav">
+					<span class="frame-prev- button">
 						<span class="frame-prev button">&lt;</span>
+					</span>
+					<span class="frame-next- button">
 						<span class="frame-next button">&gt;</span>
 					</span>
-					<span class="frame-close button">X</span>
 				</span>
-			</span>
-			
+				<span class="frame-close button">X</span>
+			</div>
+			<div class="frame-desc cycle-slideshow" data-cycle-prev=".frame-prev-" data-cycle-next=".frame-next-" data-cycle-slides=".frame-desc" data-cycle-paused="true" data-cycle-sync="false" data-cycle-timeout="400" data-cycle-speed="300" data-cycle-fx="scrollVert">
+				<?php foreach($sites as $site): ?>
+					<?php if($site['classes'] != "coming-soon"): ?>
+						<div class="frame-desc">
+							<span class="frame-title"><a href="<?php print $site['url'] ?>" target="_blank"><?php print $site['client'] ?></a></span>
+							<span class="frame-details">
+								<span class="frame-type"><?php print $site['type'] ?></span>
+								<span class="frame-location"><?php print $site['location'] . ', ' . $site['date'] ?></span>
+							</span>
+						</div>
+					<?php endif; ?>
+				<?php endforeach; ?>
+			</div>			
 		</div>
-		<div class="frames cycle-slideshow" data-cycle-prev=".frame-prev" data-cycle-next=".frame-next" data-cycle-slides="> iframe" data-cycle-fx="scrollHorz" data-cycle-paused="true">
+		
+		<div class="frames cycle-slideshow" data-cycle-prev=".frame-prev" data-cycle-next=".frame-next" data-cycle-slides=" iframe" data-cycle-fx="scrollHorz" data-cycle-paused="true">
 			<?php foreach($sites as $site): ?>
-				
-					<iframe id="iframe" data-href="<?php print $site['url'] ?>" height="70%" width="100%" ></iframe>
-				
+				<?php if($site['classes'] != "coming-soon"): ?>	
+					<iframe id="iframe" data-src="<?php print $site['url'] ?>" height="70%" width="100%" ></iframe>
+				<?php endif; ?>
 			<?php endforeach; ?>
 		</div>
 	</div>

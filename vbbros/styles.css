@@ -435,11 +435,15 @@ html, body, #iframe, #frame-container{
 
 .frame-desc{
 	padding-left: 0px;
+	float: left;
+	width: 100%;
 }
+
 .frame-title{
 	width: 250px;
 	display: inline-block;
 	text-align: right;
+	padding-right: 15px;
 }
 
 .frame-title a{
@@ -454,10 +458,13 @@ html, body, #iframe, #frame-container{
 .site-container{
 	width: 100%;
 }
+
 .frame-more{
 	margin-top: 15px;
 	margin-bottom: 15px;
 	font-size: x-large;
+	display: inline-block;
+	width: 100%;
 }
 
 .frame-details{
@@ -465,24 +472,23 @@ html, body, #iframe, #frame-container{
 }
 
 .frame-type{
-	width: 110px;
+	width: 140px;
+	border-left: 2px solid white;
+	border-right: 2px solid white;
 	display: inline-block;
 	text-align: center;
 }
 
 .frame-location{
 	font-size: smaller;
-	padding-left: 15px;
-}
-
-.sep{
 	padding: 0px 15px;
 }
-
 .controls{
-	float: right;
+	position: absolute;
+	right: 0px;
 	font-size: x-large;
 	padding: 0px 25px;
+	z-index: 100;
 }
 
 .controls .button{

@@ -4,92 +4,48 @@ $(document).ready(function(){
 
 	//Filling the sites
 	var total = $('.site').size()-1;
-	$('li.site:not(.coming-soon)').each(function(index, element){
-		var $this = $(element);
-		$this.data('target', count);
-		site = {
-			index: count,
-			next: (count + 1 == total) ? 0 : count + 1,
-			prev: (count == 0) ? total - 1 : count - 1,
-			id: $this.data('id'),
-			title: $this.find('.client').text(),
-			href: $this.find('a.site-link').attr('href'),
-			date: $this.data('date'),
-			type: $this.data('type'),
-			location: $this.data('location'),
-		};
-		count++;
-		sites.push(site);
-	});
-	var cont = $('#frame-container');
+	var cont = $('#frame-container');	
+	$('.frames').height($("#frame-container").innerHeight(false)*0.98-$('.frame-more').outerHeight(true)+"px");
 	
-	function openSite(site)
-	{
-		cont.data('closed', false).slideDown(function(){
-			$.scrollTo('#frame-container', 400);
+	$('li.site:not(.coming-soon)').each(function(index, element){
+		var $this = $(this);
+		$this.bind('click',function(e){
+			$('#frame-container').slideDown(function(){
+				$.scrollTo('#frame-container', 400);
+			});
+			e.preventDefault();
+			$('.frames').cycle(index);
+			setTimeout(function(){$('.cycle-slideshow').cycle(index);}, 500);			
 		});
-		
-		if(cont.data('current') != site.href || true)
-		{
-			var link = '<a href=\"' + site.href + '\" target=\"_blank\">' + site.title + '</a>';
-			cont.data('current', site.href).children('iframe').attr({	
-				"src": site.href,
-				"height": $(window).height()-$('.frame-more').outerHeight(true)+"px",
-				});
-			$('.frame-desc').fadeOut('fast', function(){
-				$('.frame-title').html(link);
-				$('.frame-type').text(site.type);
-				$('.frame-location').text(site.location + ", " + site.date);
-				$(this).fadeIn();
-			})
-			
-			$('.frame-next').data('target', site.next);
-			$('.frame-prev').data('target', site.prev);
-		}
-	}
-	//Small hack to avoid new variables for the mousetrap thingy
+	});
+	
+	//Attach trigger
 	Mousetrap.bind('left', function() {
-		if(!cont.data('closed'))
-		{
-	    	var target = $('.frame-prev').data('target');
-	    	openSite(sites[target]);
-	    	
-	    	if( target == total-1 )
-			{
-				$('.nav').addClass('spin-next').removeClass('spin-prev');
-			}
-			else
-			{
-				$('.nav').removeClass('spin-prev spin-next')
-			}
-		}
+		$('.frame-prev').trigger('click');
     });
 	Mousetrap.bind('right', function() {
-		if(!cont.data('closed'))
-		{
-	    	var target = $('.frame-next').data('target');
-	    	openSite(sites[target]);
-	    	
-	    	if(target == 0)
-			{
-				$('.nav').addClass('spin-prev').removeClass('spin-next');
-			}
-			else
-			{
-				$('.nav').removeClass('spin-prev spin-next')
-			}
-		}
+		$('.frame-next').trigger('click');
     });
     
-	$('li.item:not(.coming-soon, #we), .frame-prev, .frame-next').on('click', function(e){
-		e.preventDefault();
-		var target = $(this).data('target');
-		console.log(target);
-		if( $(this).hasClass('frame-next') && target == 0)
+    
+    // Load slide 
+    $("body").bind('cycle-before', function(e, oH, inn, out, flag){
+	    var out = $(out);
+	    var src = out.data('src');
+	    $.scrollTo('#frame-container', 400);
+	    		
+	    if(!out.data('loaded'))
+	    {
+			out.attr('src', src).data('loaded', true);
+		}
+		
+		//Spin arrows on loop
+		var next = oH.nextSlide;
+		if( next == oH.slideCount-1 && !flag)
 		{
 			$('.nav').addClass('spin-prev').removeClass('spin-next');
 		}
-		else if( $(this).hasClass('frame-prev') && target == total-1 )
+		else if( next == 0 && flag)
 		{
 			$('.nav').addClass('spin-next').removeClass('spin-prev');
 		}
@@ -97,28 +53,21 @@ $(document).ready(function(){
 		{
 			$('.nav').removeClass('spin-prev spin-next')
 		}
-		openSite(sites[target]);
-	});
-	
-		
+    });
+    
+    //Hack to delay second cycle
+    $('.frame-next, .frame-prev').bind('click', function(e){
+    	var parent = $(this).parent();
+    	setTimeout(function(){parent.trigger('click');}, 500);
+    	return false;
+    });
+    		
 	$('.frame-close').on('click', function(){
-		$.scrollTo(0, 400, function(){
+		$.scrollTo('#we', 400, function(){
 			cont.data('closed', true).slideToggle();
 		});
 	})
-	/*
-	$('.colorbox,').colorbox({
-	    maxWidth: "95%",
-	    current: "",
-	    returnFocus: false,
-	});
-	*/
 	
-	$('h2.client').on('click', function(e){
-		e.preventDefault();
-		$(this).parent('.site').toggleClass('show-more');	
-	});
-
 	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
 		$('#we').prependTo('.container');
 	}
